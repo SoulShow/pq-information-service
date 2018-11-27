@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pq.information.mapper.InformationMapper" >
+  <resultMap id="BaseResultMap" type="com.pq.information.entity.Information" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="read_count" property="readCount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pq_information
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pq.information.entity.Information" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pq_information (title, img, author, 
+      read_count, status, created_time, 
+      updated_time, content)
+    values (#{title,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
+      #{readCount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.pq.information.entity.Information" >
+    update pq_information
+    set title = #{title,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      read_count = #{readCount,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, title, img, author, read_count, status, created_time, updated_time, content
+    from pq_information
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, title, img, author, read_count, status, created_time, updated_time, content
+    from pq_information
+  </select>
+
+  <select id="selectList" resultMap="BaseResultMap" >
+    select id, title, img, author, read_count, status, created_time, updated_time, content
+    from pq_information
+    where status = 1
+    order by created_time desc
+    limit #{offset},#{size}
+  </select>
+</mapper>

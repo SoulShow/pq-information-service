@@ -8,10 +8,10 @@ import com.pq.common.exception.ErrorCode;
  * 结果对象
  * @author liutao
  */
-public class Result {
-    public Result(){}
+public class InformationResult {
+    public InformationResult(){}
 
-    public Result(ErrorCode errorCode) {
+    public InformationResult(ErrorCode errorCode) {
         this.errorCode = errorCode;
     }
 
