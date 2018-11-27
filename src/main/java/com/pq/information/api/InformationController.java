@@ -14,8 +14,8 @@ public class InformationController {
 	@Autowired
 	private InformationService informationService;
 	@GetMapping(value = "/information")
-	public InformationResult getInformation(@RequestParam(value = "page") Integer page,
-											@RequestParam(value = "size") Integer size) {
+	public InformationResult getInformation(@RequestParam(value = "page",required = false) Integer page,
+											@RequestParam(value = "size",required = false) Integer size) {
 		if (page == null || page < 1) {
 			page = 1;
 		}
