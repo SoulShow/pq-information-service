@@ -3,6 +3,7 @@ package com.pq.information.api;
 
 import com.pq.information.service.InformationService;
 import com.pq.information.utils.InformationResult;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,12 @@ public class InformationController {
 
 		InformationResult informationResult = new InformationResult();
 		informationResult.setData(informationService.getInformationList(offset,size));
+		return informationResult;
+	}
+	@GetMapping(value = "/index/banner/detail")
+	public InformationResult getIndexBannerDetail(@RequestParam(value = "id")Long id) {
+		InformationResult informationResult = new InformationResult();
+		informationResult.setData(informationService.getIndexBannerById(id));
 		return informationResult;
 	}
 	@GetMapping(value = "/index/banner")

@@ -1,10 +1,13 @@
 package com.pq.information.service.impl;
 
 import com.pq.common.util.DateUtil;
+import com.pq.information.dto.IndexBannerDetailDto;
 import com.pq.information.dto.IndexBannerDto;
 import com.pq.information.dto.InformationDto;
 import com.pq.information.entity.IndexBanner;
 import com.pq.information.entity.Information;
+import com.pq.information.exception.InformationErrors;
+import com.pq.information.exception.InformationException;
 import com.pq.information.mapper.IndexBannerMapper;
 import com.pq.information.mapper.InformationMapper;
 import com.pq.information.service.InformationService;
@@ -30,15 +33,28 @@ public class InformationServiceImpl implements InformationService {
         for(IndexBanner indexBanner:list){
             IndexBannerDto indexBannerDto = new IndexBannerDto();
             indexBannerDto.setId(indexBanner.getId());
-            indexBannerDto.setTitle(indexBanner.getTitle());
             indexBannerDto.setPicture(indexBanner.getPicture());
-            indexBannerDto.setAuthor(indexBanner.getAuthor());
-            indexBannerDto.setCreatedTime(DateUtil.formatDate(indexBanner.getCreatedTime(),DateUtil.DEFAULT_DATE_FORMAT));
-            indexBannerDto.setContent(indexBanner.getContent());
             indexBannerList.add(indexBannerDto);
         }
         return indexBannerList;
     }
+
+    @Override
+    public IndexBannerDetailDto getIndexBannerById(Long id){
+        IndexBanner indexBanner = indexBannerMapper.selectByPrimaryKey(id);
+        if(indexBanner==null){
+            InformationException.raise(InformationErrors.INDEX_BANNER_IS_NOT_EXIST);
+        }
+        IndexBannerDetailDto indexBannerDetailDto = new IndexBannerDetailDto();
+        indexBannerDetailDto.setId(indexBanner.getId());
+        indexBannerDetailDto.setPicture(indexBanner.getPicture());
+        indexBannerDetailDto.setContent(indexBanner.getContent());
+        indexBannerDetailDto.setTitle(indexBanner.getTitle());
+        indexBannerDetailDto.setAuthor(indexBanner.getAuthor());
+        indexBannerDetailDto.setCreatedTime(DateUtil.formatDate(indexBanner.getCreatedTime(),DateUtil.DEFAULT_DATE_FORMAT));
+        return indexBannerDetailDto;
+    }
+
 
     @Override
     public List<InformationDto> getInformationList(Integer offset,Integer size){

@@ -1,6 +1,7 @@
 package com.pq.information.service;
 
 
+import com.pq.information.dto.IndexBannerDetailDto;
 import com.pq.information.dto.IndexBannerDto;
 import com.pq.information.dto.InformationDto;
 
@@ -17,6 +18,12 @@ public interface InformationService {
      * @return
      */
     List<IndexBannerDto> getIndexBannerList();
+
+    /**
+     * 获取详情
+     * @return
+     */
+    IndexBannerDetailDto getIndexBannerById(Long id);
 
     /**
      * 获取资讯列表
