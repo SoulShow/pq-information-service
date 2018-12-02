@@ -1,43 +1,60 @@
 package com.pq.information.utils;
 
-
-import com.pq.common.exception.CommonErrors;
-import com.pq.common.exception.ErrorCode;
-
 /**
- * 结果对象
- * @author liutao
+ *
+ * @author liken
+ * @date 15/3/14
  */
-public class InformationResult {
-    public InformationResult(){}
+public class InformationResult<T> {
 
-    public InformationResult(ErrorCode errorCode) {
-        this.errorCode = errorCode;
+    private T data;
+
+    private String status = "00000";
+
+    private String message = "成功";
+
+
+    public InformationResult(){
     }
 
-    private ErrorCode errorCode = CommonErrors.SUCCESS;
-
-
-    private Object data;
-
-    public void setErrorCode(ErrorCode errorCode) {
-        this.errorCode = errorCode;
+    public InformationResult(T data, String status, String message){
+        this.data = data;
+        this.status = status;
+        this.message = message;
     }
 
-    public String getErrCode(){
-        return errorCode.getErrorCode();
-    }
-
-
-    public String getErrMsg(){
-        return errorCode.getErrorMsg();
-    }
-
-    public Object getData() {
+    public T getData() {
         return data;
     }
-    
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
+    }
+
+    /**
+     * 通用成功结果对象
+     * @return
+     */
+    public static <T> InformationResult<T> success(T value){
+        InformationResult<T> res = new InformationResult<T>();
+        res.setData(value);
+        return res;
+    }
+
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

@@ -1,6 +1,7 @@
 package com.pq.information.api;
 
 
+import com.pq.common.exception.CommonErrors;
 import com.pq.information.service.InformationService;
 import com.pq.information.utils.InformationResult;
 import org.apache.ibatis.annotations.Param;
@@ -21,7 +22,7 @@ public class InformationController {
 			page = 1;
 		}
 		if (size == null || size < 1) {
-			size = 10;
+			size = 20;
 		}
 		int offset = (page - 1) * size;
 
@@ -39,6 +40,41 @@ public class InformationController {
 	public InformationResult getIndexBanner() {
 		InformationResult informationResult = new InformationResult();
 		informationResult.setData(informationService.getIndexBannerList());
+		return informationResult;
+	}
+
+	@GetMapping(value = "/subject/banner")
+	public InformationResult getSubjectBanner() {
+		InformationResult informationResult = new InformationResult();
+		try{
+			informationResult.setData(informationService.getSubjectBanner());
+		}catch (Exception e){
+			e.printStackTrace();
+			informationResult.setStatus(CommonErrors.DB_EXCEPTION.getErrorCode());
+			informationResult.setMessage(CommonErrors.DB_EXCEPTION.getErrorMsg());
+		}
+		return informationResult;
+	}
+
+	@GetMapping(value = "/subject")
+	public InformationResult getSubjectList(@RequestParam(value = "page",required = false) Integer page,
+											@RequestParam(value = "size",required = false) Integer size) {
+		if (page == null || page < 1) {
+			page = 1;
+		}
+		if (size == null || size < 1) {
+			size = 20;
+		}
+		int offset = (page - 1) * size;
+
+		InformationResult informationResult = new InformationResult();
+		try{
+			informationResult.setData(informationService.getSubjectList(offset,size));
+		}catch (Exception e){
+			e.printStackTrace();
+			informationResult.setStatus(CommonErrors.DB_EXCEPTION.getErrorCode());
+			informationResult.setMessage(CommonErrors.DB_EXCEPTION.getErrorMsg());
+		}
 		return informationResult;
 	}
 

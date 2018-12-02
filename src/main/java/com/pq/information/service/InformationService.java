@@ -1,9 +1,8 @@
 package com.pq.information.service;
 
 
-import com.pq.information.dto.IndexBannerDetailDto;
-import com.pq.information.dto.IndexBannerDto;
-import com.pq.information.dto.InformationDto;
+import com.pq.information.dto.*;
+import com.pq.information.entity.Subject;
 
 import java.util.List;
 
@@ -21,13 +20,30 @@ public interface InformationService {
 
     /**
      * 获取详情
+     * @param id
      * @return
      */
     IndexBannerDetailDto getIndexBannerById(Long id);
 
     /**
      * 获取资讯列表
+     * @param offset
+     * @param size
      * @return
      */
     List<InformationDto> getInformationList(Integer offset,Integer size);
+
+    /**
+     * 获取首页banner信息
+     * @return
+     */
+    SubjectBannerDto getSubjectBanner();
+
+    /**
+     * 获取精选课题
+     * @param offset
+     * @param size
+     * @return
+     */
+    List<SubjectDto> getSubjectList(int offset,int size);
 }

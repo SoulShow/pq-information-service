@@ -40,13 +40,13 @@
 
 
 
-        <table tableName="pq_information" domainObjectName="Information">
+        <table tableName="pq_subject" domainObjectName="Subject">
         <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         <columnOverride column="created_time" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
         <columnOverride column="updated_time" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
         </table>
 
-        <table tableName="pq_index_banner" domainObjectName="IndexBanner">
+        <table tableName="pq_subject_banner" domainObjectName="SubjectBanner">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride column="created_time" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
             <columnOverride column="updated_time" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pq.information.mapper.SubjectMapper">
+  <resultMap id="BaseResultMap" type="com.pq.information.entity.Subject">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="tag" jdbcType="VARCHAR" property="tag" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pq_subject
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pq.information.entity.Subject">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pq_subject (title, tag, url, 
+      status, created_time, updated_time
+      )
+    values (#{title,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.pq.information.entity.Subject">
+    update pq_subject
+    set title = #{title,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, title, tag, url, status, created_time, updated_time
+    from pq_subject
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, title, tag, url, status, created_time, updated_time
+    from pq_subject
+  </select>
+  <select id="selectValid" resultMap="BaseResultMap">
+    select id, title, tag, url, status, created_time, updated_time
+    from pq_subject
+    where status = 1
+    order by created_time desc
+    limit #{offset},#{size}
+  </select>
+</mapper>
