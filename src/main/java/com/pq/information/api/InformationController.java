@@ -43,7 +43,7 @@ public class InformationController {
 		return informationResult;
 	}
 
-	@GetMapping(value = "/subject/banner")
+	@GetMapping(value = "/information/subject/banner")
 	public InformationResult getSubjectBanner() {
 		InformationResult informationResult = new InformationResult();
 		try{
@@ -56,7 +56,7 @@ public class InformationController {
 		return informationResult;
 	}
 
-	@GetMapping(value = "/subject")
+	@GetMapping(value = "/information/subject")
 	public InformationResult getSubjectList(@RequestParam(value = "page",required = false) Integer page,
 											@RequestParam(value = "size",required = false) Integer size) {
 		if (page == null || page < 1) {
