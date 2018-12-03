@@ -108,7 +108,7 @@ public class InformationServiceImpl implements InformationService {
             subjectDto.setId(subject.getId());
             subjectDto.setTitle(subject.getTitle());
             subjectDto.setTag(subject.getTag());
-            subjectDto.setTag(subject.getTag());
+            subjectDto.setColor(subject.getColor());
             subjectDto.setUrl(subject.getUrl());
             subjectDto.setCreateTime(DateUtil.formatDate(subject.getCreatedTime(),DateUtil.DEFAULT_DATETIME_FORMAT));
             list.add(subjectDto);
