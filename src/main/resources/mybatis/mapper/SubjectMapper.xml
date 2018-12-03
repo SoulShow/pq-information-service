@@ -5,6 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="tag" jdbcType="VARCHAR" property="tag" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
@@ -19,10 +20,10 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into pq_subject (title, tag, url, 
-      status, created_time, updated_time
+      status, created_time, updated_time, color
       )
     values (#{title,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      #{status,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP},#{color}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.pq.information.entity.Subject">
@@ -32,20 +33,21 @@
       url = #{url,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      color = #{color}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, title, tag, url, status, created_time, updated_time
+    select id, title, tag, url, status, created_time, updated_time, color
     from pq_subject
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, title, tag, url, status, created_time, updated_time
+    select id, title, tag, url, status, created_time, updated_time, color
     from pq_subject
   </select>
   <select id="selectValid" resultMap="BaseResultMap">
-    select id, title, tag, url, status, created_time, updated_time
+    select id, title, tag, url, status, created_time, updated_time,color
     from pq_subject
     where status = 1
     order by created_time desc
