@@ -2,12 +2,17 @@ package com.pq.information.entity;
 
 import java.sql.Timestamp;
 
+/**
+ * @author liutao
+ */
 public class Subject {
     private Long id;
 
     private String title;
 
     private String tag;
+
+    private String color;
 
     private String url;
 
@@ -71,5 +76,13 @@ public class Subject {
 
     public void setUpdatedTime(Timestamp updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }
