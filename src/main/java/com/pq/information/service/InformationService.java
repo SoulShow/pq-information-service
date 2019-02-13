@@ -51,8 +51,9 @@ public interface InformationService {
      * 获取最新版本
      * @param client
      * @param versionNo
+     * @param platform
      * @return
      */
-    ReleaseVersionDto getLastVersion(int client,String versionNo);
+    ReleaseVersionDto getLastVersion(int client,String versionNo,int platform);
 
 }

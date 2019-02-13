@@ -113,14 +113,14 @@ public class InformationServiceImpl implements InformationService {
         return list;
     }
     @Override
-    public ReleaseVersionDto getLastVersion(int client,String versionNo) {
-        VersionControls latestControl = versionControlsMapper.findLatest(client);
+    public ReleaseVersionDto getLastVersion(int client,String versionNo,int platform) {
+        VersionControls latestControl = versionControlsMapper.findLatest(client,platform);
         if (latestControl == null) {
             return null;
         }
         //检查在自己这个版本之后，是否发布过强制更新的版本，如果有，则这个版本为必须强制更新
         if (!latestControl.getForceUpdate()) {
-            Integer count = versionControlsMapper.findEverForceUpdatedByVersionCode(client, versionNo);
+            Integer count = versionControlsMapper.findEverForceUpdatedByVersionCode(client, versionNo,platform);
             //如果曾经有过强制更新，则必须更新
             if (count != null && count > 0) {
                 latestControl.setForceUpdate(Boolean.TRUE);

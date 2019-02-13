@@ -81,9 +81,10 @@ public class InformationController {
 	@RequestMapping(value = "/information/versionControl", method = RequestMethod.GET)
 	@ResponseBody
 	public InformationResult latest(@RequestParam(value = "client") int client,
-									@RequestParam(value = "versionNo") String versionNo) {
+									@RequestParam(value = "versionNo") String versionNo,
+									@RequestParam(value = "platform") int platform) {
 		InformationResult result = new InformationResult();
-		result.setData(informationService.getLastVersion(client,versionNo));
+		result.setData(informationService.getLastVersion(client,versionNo,platform));
 		return result;
 	}
 

@@ -16,7 +16,8 @@ public interface VersionControlsMapper {
 
     int updateByPrimaryKey(VersionControls record);
 
-    VersionControls findLatest(@Param("client") int client);
+    VersionControls findLatest(@Param("client") int client,@Param("platform") int platform);
 
-    Integer findEverForceUpdatedByVersionCode(@Param("client") int client, @Param("versionNo") String versionNo);
+    Integer findEverForceUpdatedByVersionCode(@Param("client") int client, @Param("versionNo") String versionNo,
+                                              @Param("platform") int platform);
 }

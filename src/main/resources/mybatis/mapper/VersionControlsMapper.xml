@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.pq.information.entity.VersionControls" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="client" property="client" jdbcType="INTEGER" />
+    <result column="platform" property="platform" jdbcType="INTEGER" />
     <result column="force_update" property="forceUpdate" jdbcType="BIT" />
     <result column="version_title" property="versionTitle" jdbcType="VARCHAR" />
     <result column="version_content" property="versionContent" jdbcType="VARCHAR" />
@@ -26,11 +27,11 @@
     insert into pq_version_controls (client, force_update, version_title, 
       version_content, version, version_code, 
       url, size, release_time, 
-      updated_time, created_time)
+      updated_time, created_time,platform)
     values (#{client,jdbcType=INTEGER}, #{forceUpdate,jdbcType=BIT}, #{versionTitle,jdbcType=VARCHAR}, 
       #{versionContent,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{versionCode,jdbcType=INTEGER}, 
       #{url,jdbcType=VARCHAR}, #{size,jdbcType=DOUBLE}, #{releaseTime,jdbcType=TIMESTAMP}, 
-      #{updatedTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP})
+      #{updatedTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP},#{platform})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.pq.information.entity.VersionControls" >
     update pq_version_controls
@@ -44,18 +45,19 @@
       size = #{size,jdbcType=DOUBLE},
       release_time = #{releaseTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      created_time = #{createdTime,jdbcType=TIMESTAMP}
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      platform = #{platform}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select id, client, force_update, version_title, version_content, version, version_code, 
-    url, size, release_time, updated_time, created_time
+    url, size, release_time, updated_time, created_time,platform
     from pq_version_controls
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, client, force_update, version_title, version_content, version, version_code, 
-    url, size, release_time, updated_time, created_time
+    url, size, release_time, updated_time, created_time,platform
     from pq_version_controls
   </select>
 
@@ -64,6 +66,7 @@
     from pq_version_controls
     WHERE client = #{client}
     AND release_time &lt;= now()
+    and platform = #{platform}
     order by release_time desc
     limit 0,1
   </select>
@@ -71,5 +74,6 @@
     select count(id)
     from pq_version_controls
     where client = #{client} and version &gt; #{versionNo} and force_update = 1
+    and platform = #{platform}
   </select>
 </mapper>

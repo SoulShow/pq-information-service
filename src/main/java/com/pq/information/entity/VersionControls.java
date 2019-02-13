@@ -7,6 +7,8 @@ public class VersionControls {
 
     private Integer client;
 
+    private Integer platform;
+
     private Boolean forceUpdate;
 
     private String versionTitle;
@@ -121,5 +123,13 @@ public class VersionControls {
 
     public void setCreatedTime(Timestamp createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public Integer getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(Integer platform) {
+        this.platform = platform;
     }
 }
