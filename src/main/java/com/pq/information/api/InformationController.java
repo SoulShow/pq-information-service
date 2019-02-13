@@ -78,7 +78,7 @@ public class InformationController {
 		return informationResult;
 	}
 
-	@RequestMapping(value = "/versionControl", method = RequestMethod.GET)
+	@RequestMapping(value = "/information/versionControl", method = RequestMethod.GET)
 	@ResponseBody
 	public InformationResult latest(@RequestParam(value = "client") int client,
 									@RequestParam(value = "versionNo") String versionNo) {
