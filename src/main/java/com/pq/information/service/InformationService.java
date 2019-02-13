@@ -46,4 +46,13 @@ public interface InformationService {
      * @return
      */
     List<SubjectDto> getSubjectList(int offset,int size);
+
+    /**
+     * 获取最新版本
+     * @param client
+     * @param versionNo
+     * @return
+     */
+    ReleaseVersionDto getLastVersion(int client,String versionNo);
+
 }

@@ -2,19 +2,14 @@ package com.pq.information.service.impl;
 
 import com.pq.common.util.DateUtil;
 import com.pq.information.dto.*;
-import com.pq.information.entity.IndexBanner;
-import com.pq.information.entity.Information;
-import com.pq.information.entity.Subject;
-import com.pq.information.entity.SubjectBanner;
+import com.pq.information.entity.*;
 import com.pq.information.exception.InformationErrors;
 import com.pq.information.exception.InformationException;
-import com.pq.information.mapper.IndexBannerMapper;
-import com.pq.information.mapper.InformationMapper;
-import com.pq.information.mapper.SubjectBannerMapper;
-import com.pq.information.mapper.SubjectMapper;
+import com.pq.information.mapper.*;
 import com.pq.information.service.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +27,8 @@ public class InformationServiceImpl implements InformationService {
     private SubjectBannerMapper subjectBannerMapper;
     @Autowired
     private SubjectMapper subjectMapper;
+    @Autowired
+    private VersionControlsMapper versionControlsMapper;
     @Override
     public List<IndexBannerDto> getIndexBannerList(){
         List<IndexBanner> list = indexBannerMapper.selectList();
@@ -114,6 +111,33 @@ public class InformationServiceImpl implements InformationService {
             list.add(subjectDto);
         }
         return list;
+    }
+    @Override
+    public ReleaseVersionDto getLastVersion(int client,String versionNo) {
+        VersionControls latestControl = versionControlsMapper.findLatest(client);
+        if (latestControl == null) {
+            return null;
+        }
+        //检查在自己这个版本之后，是否发布过强制更新的版本，如果有，则这个版本为必须强制更新
+        if (!latestControl.getForceUpdate()) {
+            Integer count = versionControlsMapper.findEverForceUpdatedByVersionCode(client, versionNo);
+            //如果曾经有过强制更新，则必须更新
+            if (count != null && count > 0) {
+                latestControl.setForceUpdate(Boolean.TRUE);
+            }
+        }
+        return covertVersionEntityToDto(latestControl);
+    }
+
+    private ReleaseVersionDto covertVersionEntityToDto(VersionControls latestControl) {
+        ReleaseVersionDto latestVersion = new ReleaseVersionDto();
+        latestVersion.setEnforceFlag(latestControl.getForceUpdate());
+        latestVersion.setVersionCode(latestControl.getVersionCode());
+        latestVersion.setVersionInfo(latestControl.getVersionContent());
+        latestVersion.setDownUrl(latestControl.getUrl());
+        latestVersion.setTarSize(latestControl.getSize());
+        latestVersion.setVersionNo(latestControl.getVersion());
+        return latestVersion;
     }
 
 
