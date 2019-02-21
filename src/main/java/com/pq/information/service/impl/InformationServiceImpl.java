@@ -38,6 +38,7 @@ public class InformationServiceImpl implements InformationService {
             indexBannerDto.setId(indexBanner.getId());
             indexBannerDto.setPicture(indexBanner.getPicture());
             indexBannerDto.setContent(indexBanner.getContent());
+            indexBannerDto.setTitle(indexBanner.getTitle());
             indexBannerList.add(indexBannerDto);
         }
         return indexBannerList;
