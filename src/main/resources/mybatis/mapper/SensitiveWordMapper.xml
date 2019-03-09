@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pq.information.mapper.SensitiveWordMapper" >
+  <resultMap id="BaseResultMap" type="com.pq.information.entity.SensitiveWord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="word" property="word" jdbcType="VARCHAR" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pq_sensitive_word
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pq.information.entity.SensitiveWord" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pq_sensitive_word (word, updated_time, created_time
+      )
+    values (#{word,jdbcType=VARCHAR}, #{updatedTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.pq.information.entity.SensitiveWord" >
+    update pq_sensitive_word
+    set word = #{word,jdbcType=VARCHAR},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      created_time = #{createdTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, word, updated_time, created_time
+    from pq_sensitive_word
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, word, updated_time, created_time
+    from pq_sensitive_word
+  </select>
+  <select id="selectByWord" resultMap="BaseResultMap" >
+    select id, word, updated_time, created_time
+    from pq_sensitive_word
+    where word = #{word,jdbcType=VARCHAR}
+  </select>
+</mapper>

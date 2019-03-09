@@ -3,6 +3,7 @@ package com.pq.information.api;
 
 import com.pq.common.exception.CommonErrors;
 import com.pq.information.service.InformationService;
+import com.pq.information.service.SensitiveWordService;
 import com.pq.information.utils.InformationResult;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 public class InformationController {
 	@Autowired
 	private InformationService informationService;
+	@Autowired
+	private SensitiveWordService sensitiveWordService;
+
 	@GetMapping(value = "/information")
 	public InformationResult getInformation(@RequestParam(value = "page",required = false) Integer page,
 											@RequestParam(value = "size",required = false) Integer size) {
@@ -85,6 +89,14 @@ public class InformationController {
 									@RequestParam(value = "platform") int platform) {
 		InformationResult result = new InformationResult();
 		result.setData(informationService.getLastVersion(client,versionNo,platform));
+		return result;
+	}
+
+	@RequestMapping(value = "/information/isHaveSensitiveWord", method = RequestMethod.GET)
+	@ResponseBody
+	public InformationResult latest(@RequestParam(value = "content") String content) {
+		InformationResult result = new InformationResult();
+		result.setData(sensitiveWordService.isHaveSensitiveWord(content));
 		return result;
 	}
 
