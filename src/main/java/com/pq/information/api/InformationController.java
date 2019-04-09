@@ -2,6 +2,7 @@ package com.pq.information.api;
 
 
 import com.pq.common.exception.CommonErrors;
+import com.pq.information.dto.ContentDto;
 import com.pq.information.service.InformationService;
 import com.pq.information.service.SensitiveWordService;
 import com.pq.information.utils.InformationResult;
@@ -92,11 +93,11 @@ public class InformationController {
 		return result;
 	}
 
-	@RequestMapping(value = "/information/isHaveSensitiveWord", method = RequestMethod.GET)
+	@RequestMapping(value = "/information/isHaveSensitiveWord", method = RequestMethod.POST)
 	@ResponseBody
-	public InformationResult latest(@RequestParam(value = "content") String content) {
+	public InformationResult latest(@RequestBody ContentDto contentDto) {
 		InformationResult result = new InformationResult();
-		result.setData(sensitiveWordService.isHaveSensitiveWord(content));
+		result.setData(sensitiveWordService.isHaveSensitiveWord(contentDto.getContent()));
 		return result;
 	}
 
